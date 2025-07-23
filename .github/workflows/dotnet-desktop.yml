@@ -48,7 +48,7 @@ jobs:
 
   build:
 
-    runs-on: ubuntu-latest  # For a list of available runner types, refer to
+    runs-on: windows-latest  # For a list of available runner types, refer to
      
     steps:
     - name: Checkout
