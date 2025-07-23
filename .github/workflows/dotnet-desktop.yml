@@ -63,8 +63,9 @@ jobs:
         dotnet-version: 8.0.x
 
     
-    - script: |
+    - name: build
+        script: |
           cd src
           cd MusicPiano
           dotnet build
-      displayName: 'dotnet pack '
+      
