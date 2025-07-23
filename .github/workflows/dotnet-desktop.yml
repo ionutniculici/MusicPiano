@@ -64,7 +64,7 @@ jobs:
 
     
     - name: build
-        script: |
+      run:  |
           cd src
           cd MusicPiano
           dotnet build
