@@ -9,6 +9,7 @@ while (willContinue)
 {
     Console.WriteLine("Please enter a note or 0 to exit.");
     var note = Console.ReadLine();
-
-    willContinue = myNote.ChooseNote(note);
+    string output;
+    willContinue = myNote.ChooseNote(note, out output);
+    Console.WriteLine(output);
 }
