@@ -10,5 +10,5 @@ while (willContinue)
     Console.WriteLine("Please enter a note or 0 to exit.");
     var note = Console.ReadLine();
 
-    willContinue = myNote.PlayNote(note);
+    willContinue = myNote.ChooseNote(note);
 }
