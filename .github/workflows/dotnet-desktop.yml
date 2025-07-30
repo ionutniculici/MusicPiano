@@ -68,9 +68,11 @@ jobs:
           cd src
           cd MusicPiano
           dotnet build
+
   publish:
 
     runs-on: windows-latest  # For a list of available runner types, refer to
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
      
     steps:
     - name: Checkout
