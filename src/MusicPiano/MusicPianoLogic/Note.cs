@@ -4,13 +4,6 @@ namespace MusicPianoLogic;
 
 public class Note
 {
-    string solutionDir;
-
-    public Note()
-    {
-        solutionDir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName;
-    }
-
     /// <summary>
     /// PlayNote
     /// </summary>
@@ -97,7 +90,7 @@ public class Note
 
     void PlayNote(string note)
     {
-        string soundPath = Path.Combine(solutionDir, "Sounds", note + ".wav");
+        string soundPath = Path.Combine(Utils.solutionDir, "Sounds", note + ".wav");
         SoundPlayer simpleSound = new SoundPlayer(soundPath);
         simpleSound.Play();
     }
