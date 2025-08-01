@@ -6,12 +6,14 @@ public class PracticeLessson : Lesson
 {
     string AudioFilePath { get; set; }
 
-    public PracticeLessson(string title, Lesson[] prerequisites, bool completed, string audioFilePath)
+    public PracticeLessson(string title, Lesson[] prerequisites, bool completed, string audioFilePath) : base(title, prerequisites, completed, false)
     {
-        Title = title;
-        Prerequisites = prerequisites;
-        IsCompleted = completed;
         AudioFilePath = audioFilePath;
+    }
+
+    public PracticeLessson(string title) : this(title, [], false, string.Empty)
+    {
+
     }
 
     public override void LaunchLesson()
