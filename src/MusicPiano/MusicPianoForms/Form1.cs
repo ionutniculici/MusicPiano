@@ -13,13 +13,9 @@ namespace MusicPianoForms
         {
             var note = textBox1.Text;
             Note myNote = new Note();
-            string output;
-            var result = myNote.ChooseNote(note, out output);
-            MessageBox.Show(output);
-            if (!result)
-            {
-                Application.Exit();
-            }
+            var result = myNote.ChooseNote(note);
+            string message = result ? "Note played" : "Note did not play";
+            MessageBox.Show(message);
         }
     }
 }

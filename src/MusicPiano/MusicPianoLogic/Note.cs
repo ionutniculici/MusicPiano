@@ -9,89 +9,84 @@ public class Note
     /// </summary>
     /// <param name="note"></param>
     /// <returns>Returns true if it has successfully played the note</returns>
-    public bool ChooseNote(string note, out string output)
+    public bool ChooseNote(string note)
     {
-        output = string.Empty;
-        try
+        bool result = false;
+        if (note.Length > 2)
         {
-            if (note.Length > 2)
-            {
-                throw new Exception("User input too large");
-            }
-            switch (note)
-            {
-                case "A":
-                    PlayNote("A");
-                    output = "Will play A";
-                    break;
-                case "A#":
-                case "Bb":
-                    PlayNote("Bb");
-                    output = "Will play Bb";
-                    break;
-                case "B":
-                    PlayNote("B");
-                    output = "Will play B";
-                    break;
-                case "C":
-                    PlayNote("C");
-                    output = "Will play C";
-                    break;
-                case "C#":
-                case "Db":
-                    PlayNote("Db");
-                    output = "Will play C#";
-                    break;
-                case "D":
-                    PlayNote("D");
-                    output = "Will play D";
-                    break;
-                case "D#":
-                case "Eb":
-                    PlayNote("Eb");
-                    output = "Will play Eb";
-                    break;
-                case "E":
-                    PlayNote("E");
-                    output = "Will play E";
-                    break;
-                case "F":
-                    PlayNote("F");
-                    output = "Will play F";
-                    break;
-                case "F#":
-                case "Gb":
-                    PlayNote("Gb");
-                    output = "Will play F#";
-                    break;
-                case "G":
-                    PlayNote("G");
-                    output = "Will play G";
-                    break;
-                case "G#":
-                case "Ab":
-                    PlayNote("Ab");
-                    output = "Will play G#";
-                    break;
-                case "0":
-                    output = "Exiting...";
-                    return false;
-                default:
-                    output = "Not a note";
-                    break;
-            }
+            return false;
         }
-        catch (Exception e)
+        switch (note)
         {
-            output = e.Message;
+            case "A":
+                result = PlayNote("A");
+                //output = "Will play A";
+                break;
+            case "A#":
+            case "Bb":
+                result = PlayNote("Bb");
+                //output = "Will play Bb";
+                break;
+            case "B":
+                result = PlayNote("B");
+                //output = "Will play B";
+                break;
+            case "C":
+                result = PlayNote("C");
+                //output = "Will play C";
+                break;
+            case "C#":
+            case "Db":
+                result = PlayNote("Db");
+                //output = "Will play C#";
+                break;
+            case "D":
+                result = PlayNote("D");
+                //output = "Will play D";
+                break;
+            case "D#":
+            case "Eb":
+                result = PlayNote("Eb");
+                //output = "Will play Eb";
+                break;
+            case "E":
+                result = PlayNote("E");
+                //output = "Will play E";
+                break;
+            case "F":
+                result = PlayNote("F");
+                //output = "Will play F";
+                break;
+            case "F#":
+            case "Gb":
+                result = PlayNote("Gb");
+                //output = "Will play F#";
+                break;
+            case "G":
+                result = PlayNote("G");
+                //output = "Will play G";
+                break;
+            case "G#":
+            case "Ab":
+                result = PlayNote("Ab");
+                //output = "Will play G#";
+                break;
+            default:
+                //output = "Not a note";
+                return false;
         }
-        return true;
+        return result;
     }
 
-    void PlayNote(string note)
+    bool PlayNote(string note)
     {
         string soundPath = Path.Combine(Utils.solutionDir, "Sounds", note + ".wav");
+        if (!File.Exists(soundPath))
+        {
+            return false;
+        }
         SoundPlayer simpleSound = new SoundPlayer(soundPath);
         simpleSound.Play();
+        return true;
     }
 }
