@@ -13,8 +13,13 @@ namespace MusicPianoForms
         {
             var note = textBox1.Text;
             Note myNote = new Note();
-            var result = myNote.PlayNote(note);
-            MessageBox.Show($"Ati ales {note} result: {result}");
+            string output;
+            var result = myNote.ChooseNote(note, out output);
+            MessageBox.Show(output);
+            if (!result)
+            {
+                Application.Exit();
+            }
         }
     }
 }
