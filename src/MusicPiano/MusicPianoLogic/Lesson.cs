@@ -7,6 +7,19 @@ public abstract class Lesson
     protected bool IsCompleted { get; set; }
     protected bool IsUnlocked { get; set; }
 
+    public Lesson(string title, Lesson[] prerequisites, bool isCompleted, bool isUnlocked)
+    {
+        Title = title;
+        Prerequisites = prerequisites;
+        IsCompleted = isCompleted;
+        IsUnlocked = isUnlocked;
+    }
+
+    public Lesson(string title) : this(title, [], false, false)
+    {
+
+    }
+
     public void CompleteLesson()
     {
         IsCompleted = true;
