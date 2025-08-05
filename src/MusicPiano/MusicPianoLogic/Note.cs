@@ -80,7 +80,7 @@ public class Note
 
     bool PlayNote(string note)
     {
-        string soundPath = Path.Combine(Utils.solutionDir, "Sounds", note + ".wav");
+        string soundPath = Path.Combine(Utils.SolutionDir, "Sounds", note + ".wav");
         if (!File.Exists(soundPath))
         {
             return false;
