@@ -39,11 +39,13 @@ public abstract class Lesson
         return true;
     }
 
-    public void UnlockLesson()
+    public bool TryUnlockLesson()
     {
         if (CanLessonBeUnlocked())
         {
             IsUnlocked = true;
+            return true;
         }
+        return false;
     }
 }
