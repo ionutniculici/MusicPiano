@@ -4,14 +4,12 @@ public abstract class Lesson
 {
     protected string Title { get; set; }
     protected Lesson[] Prerequisites { get; set; }
-    protected bool IsCompleted { get; set; }
     protected bool IsUnlocked { get; set; }
 
     public Lesson(string title, Lesson[] prerequisites, bool isCompleted, bool isUnlocked)
     {
         Title = title;
         Prerequisites = prerequisites;
-        IsCompleted = isCompleted;
         IsUnlocked = isUnlocked;
     }
 
@@ -20,28 +18,17 @@ public abstract class Lesson
 
     }
 
-    public void CompleteLesson()
-    {
-        IsCompleted = true;
-    }
-
     public abstract void LaunchLesson();
 
-    public bool CanLessonBeUnlocked()
+    public bool CanUserUnlockLesson()
     {
-        foreach (var lesson in Prerequisites)
-        {
-            if (!lesson.IsCompleted)
-            {
-                return false;
-            }
-        }
+        // TODO
         return true;
     }
 
     public void UnlockLesson()
     {
-        if (CanLessonBeUnlocked())
+        if (CanUserUnlockLesson())
         {
             IsUnlocked = true;
         }
