@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicPianoForms", "MusicPia
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicPianoLogic", "MusicPianoLogic\MusicPianoLogic.csproj", "{3A9B493C-1F8B-4D54-93BD-EBB22352F4FE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicPianoResources", "MusicPianoResources\MusicPianoResources.csproj", "{30C482A9-E02C-4D13-A7EC-DCD107D8EBCC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{3A9B493C-1F8B-4D54-93BD-EBB22352F4FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3A9B493C-1F8B-4D54-93BD-EBB22352F4FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3A9B493C-1F8B-4D54-93BD-EBB22352F4FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30C482A9-E02C-4D13-A7EC-DCD107D8EBCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30C482A9-E02C-4D13-A7EC-DCD107D8EBCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30C482A9-E02C-4D13-A7EC-DCD107D8EBCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30C482A9-E02C-4D13-A7EC-DCD107D8EBCC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
