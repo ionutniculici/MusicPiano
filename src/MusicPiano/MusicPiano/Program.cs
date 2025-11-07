@@ -4,9 +4,8 @@ using Spectre.Console;
 
 AnsiConsole.Markup("[underline yellow]Hello to the music piano![/]\n");
 
-bool willContinue = true;
 Note myNote = new Note();
-while (willContinue)
+while (true)
 {
     AnsiConsole.Markup("[yellow]Please enter a note or 0 to exit.[/]\n");
     var note = Console.ReadLine();
