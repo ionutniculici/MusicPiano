@@ -1,13 +1,13 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using MusicPianoLogic;
+using Spectre.Console;
 
-Console.WriteLine("Hello to the music piano!");
+AnsiConsole.Markup("[underline yellow]Hello to the music piano![/]\n");
 
-bool willContinue = true;
 Note myNote = new Note();
-while (willContinue)
+while (true)
 {
-    Console.WriteLine("Please enter a note or 0 to exit.");
+    AnsiConsole.Markup("[yellow]Please enter a note or 0 to exit.[/]\n");
     var note = Console.ReadLine();
     if (note == "0")
     {
@@ -16,10 +16,10 @@ while (willContinue)
     bool result = myNote.ChooseNote(note);
     if (result)
     {
-        Console.WriteLine("Note played");
+        AnsiConsole.Markup("[blue]Note played[/]\n");
     }
     else
     {
-        Console.WriteLine("Note did not play");
+        AnsiConsole.Markup("[red]Note did not play[/]\n");
     }
 }
