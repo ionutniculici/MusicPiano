@@ -1,0 +1,1 @@
+Scaffold-DbContext 'Data Source=DESKTOP-JC5GAB0\SQLEXPRESS;Initial Catalog=PianoLesson;TrustServerCertificate=True;User ID=SA;Password=1235;' Microsoft.EntityFrameworkCore.SqlServer
