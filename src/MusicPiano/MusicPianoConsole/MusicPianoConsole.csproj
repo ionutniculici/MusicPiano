@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MusicPianoData\MusicPianoData.csproj" />
     <ProjectReference Include="..\MusicPianoLogic\MusicPianoLogic.csproj" />
   </ItemGroup>
 
