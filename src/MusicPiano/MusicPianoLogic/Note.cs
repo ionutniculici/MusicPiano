@@ -21,13 +21,16 @@ public class Note
 
     bool PlayNote(string note)
     {
-        string soundPath = AudioFiles.GetPath(note + ".wav");
-        if (!File.Exists(soundPath))
+        string fileName = note + ".wav";
+        using (Stream? soundStream = AudioFiles.GetSoundStream(fileName))
         {
-            return false;
+            if (soundStream == null)
+            {
+                return false;
+            }
+            SoundPlayer simpleSound = new SoundPlayer(soundStream);
+            simpleSound.Play();
+            return true;
         }
-        SoundPlayer simpleSound = new SoundPlayer(soundPath);
-        simpleSound.Play();
-        return true;
     }
 }
