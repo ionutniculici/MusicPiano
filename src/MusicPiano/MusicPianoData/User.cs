@@ -9,5 +9,7 @@ public partial class User
 
     public string Name { get; set; } = null!;
 
+    public string Password { get; set; } = null!;
+
     public virtual ICollection<UserLesson> UserLessons { get; set; } = new List<UserLesson>();
 }

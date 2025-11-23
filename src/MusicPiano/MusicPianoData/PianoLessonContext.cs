@@ -54,6 +54,7 @@ public partial class PianoLessonContext : DbContext
             entity.ToTable("User");
 
             entity.Property(e => e.Name).HasMaxLength(50);
+            entity.Property(e => e.Password).HasMaxLength(50);
         });
 
         modelBuilder.Entity<UserLesson>(entity =>
