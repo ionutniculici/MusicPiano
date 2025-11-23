@@ -94,10 +94,10 @@ while (true)
 {
     AnsiConsole.Markup("[underline yellow]Hello to the music piano![/]\n");
     AnsiConsole.Markup("[yellow]Please enter your user name:[/]\n");
-    var userName = Console.ReadLine();
+    var username = Console.ReadLine();
     AnsiConsole.Markup("[yellow]Please enter your password:[/]\n");
     var password = Console.ReadLine();
-    var user = await context.Users.SingleOrDefaultAsync(u => u.Name == userName && u.Password == password);
+    var user = await context.Users.SingleOrDefaultAsync(u => u.Name == username && u.Password == password);
 
     if (user != null)
     {
