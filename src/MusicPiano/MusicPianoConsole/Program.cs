@@ -1,5 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using Microsoft.EntityFrameworkCore;
+using MusicPianoBusinessLogic;
 using MusicPianoData;
 using MusicPianoLogic;
 using Spectre.Console;
@@ -97,7 +98,8 @@ while (true)
     var username = Console.ReadLine();
     AnsiConsole.Markup("[yellow]Please enter your password:[/]\n");
     var password = Console.ReadLine();
-    var user = await context.Users.SingleOrDefaultAsync(u => u.Name == username && u.Password == password);
+    Repository repository = new Repository(context);
+    var user = await repository.LoginUser(username, password);
 
     if (user != null)
     {

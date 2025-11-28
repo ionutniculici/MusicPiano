@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using MusicPianoBusinessLogic;
 using MusicPianoData;
 using MusicPianoLogic;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace MusicPianoForms
 {
@@ -14,7 +16,8 @@ namespace MusicPianoForms
         private async void loginButton_Click(object sender, EventArgs e)
         {
             using var context = new PianoLessonContext();
-            var user = await context.Users.SingleOrDefaultAsync(u => u.Name == usernameText.Text && u.Password == passwordText.Text);
+            Repository repository = new Repository(context);
+            var user = await repository.LoginUser(usernameText.Text, passwordText.Text);
 
             bool success = user != null ? true : false;
             if (success)
