@@ -1,0 +1,6 @@
+@MusicPianoWeb_HostAddress = http://localhost:5197
+
+GET {{MusicPianoWeb_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
