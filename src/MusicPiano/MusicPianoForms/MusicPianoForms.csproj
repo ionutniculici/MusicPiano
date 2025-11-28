@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MusicPianoBusinessLogic\MusicPianoBusinessLogic.csproj" />
     <ProjectReference Include="..\MusicPianoData\MusicPianoData.csproj" />
     <ProjectReference Include="..\MusicPianoLogic\MusicPianoLogic.csproj" />
   </ItemGroup>
