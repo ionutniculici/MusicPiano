@@ -9,6 +9,13 @@ namespace MusicPianoWeb.Controllers
     [Route("[controller]")]
     public class UserController : Controller
     {
+        private readonly PianoLessonContext _context;
+
+        public UserController(PianoLessonContext context)
+        {
+            _context = context;
+        }
+
         [HttpGet("hello")]
         public async Task<string> GetHelloAsync()
         {
@@ -19,8 +26,7 @@ namespace MusicPianoWeb.Controllers
         [HttpPost()]
         public async Task<int> LoginUser(UserLogin login)
         {
-            using PianoLessonContext context = new PianoLessonContext();
-            Repository repository = new Repository(context);
+            Repository repository = new Repository(_context);
             User? user = await repository.LoginUser(login.username, login.password);
             return user?.Id ?? -1;
         }
