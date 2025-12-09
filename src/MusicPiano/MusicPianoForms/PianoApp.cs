@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using MusicPianoBusinessLogic;
 using MusicPianoData;
 using MusicPianoLogic;
+using System.Configuration;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace MusicPianoForms
@@ -15,7 +16,10 @@ namespace MusicPianoForms
 
         private async void loginButton_Click(object sender, EventArgs e)
         {
-            using var context = new PianoLessonContext();
+            var connectionString = ConfigurationManager.ConnectionStrings["PianoDatabase"].ConnectionString;
+            var optionsBuilder = new DbContextOptionsBuilder<PianoLessonContext>();
+            optionsBuilder.UseSqlServer(connectionString);
+            using var context = new PianoLessonContext(optionsBuilder.Options);
             Repository repository = new Repository(context);
             var user = await repository.LoginUser(usernameText.Text, passwordText.Text);
 

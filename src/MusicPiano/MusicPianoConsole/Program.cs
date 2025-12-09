@@ -1,5 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using MusicPianoBusinessLogic;
 using MusicPianoData;
 using MusicPianoLogic;
@@ -90,7 +91,18 @@ await context.SaveChangesAsync();*/
 
 #endregion
 
-using var context = new PianoLessonContext();
+var builder = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+
+IConfiguration config = builder.Build();
+
+string connectionString = config.GetConnectionString("PianoDatabase");
+
+var optionsBuilder = new DbContextOptionsBuilder<PianoLessonContext>();
+optionsBuilder.UseSqlServer(connectionString);
+
+using var context = new PianoLessonContext(optionsBuilder.Options);
 while (true)
 {
     AnsiConsole.Markup("[underline yellow]Hello to the music piano![/]\n");

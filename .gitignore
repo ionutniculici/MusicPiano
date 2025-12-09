@@ -416,3 +416,5 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+src/MusicPiano/MusicPianoForms/App.config
+src/MusicPiano/MusicPianoConsole/appsettings.json
