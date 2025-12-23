@@ -4,21 +4,23 @@ namespace MusicPianoLogic;
 
 public class PracticeLessson : Lesson
 {
-    string AudioFilePath { get; set; }
+    string[] AudioFiles { get; set; }
+    string[] Answers { get; set; }
 
-    public PracticeLessson(string title, Lesson[] prerequisites, bool completed, string audioFilePath) : base(title, prerequisites, completed, false)
+    public PracticeLessson(string title, string? description, string[] audioFiles, string[] answers, Lesson[] prerequisites, bool isCompleted, bool isUnlocked) : base(title, description, prerequisites, isCompleted, false)
     {
-        AudioFilePath = audioFilePath;
+        AudioFiles = audioFiles;
+        Answers = answers;
     }
 
-    public PracticeLessson(string title) : this(title, [], false, string.Empty)
+    public PracticeLessson(string title) : this(title, null, [], [], [], false, false)
     {
 
     }
 
     public override void LaunchLesson()
     {
-        SoundPlayer simpleSound = new SoundPlayer(AudioFilePath);
-        simpleSound.Play();
+        //SoundPlayer simpleSound = new SoundPlayer(AudioFilePath);
+        //simpleSound.Play();
     }
 }

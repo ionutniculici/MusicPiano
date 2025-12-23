@@ -5,6 +5,7 @@ using MusicPianoBusinessLogic;
 using MusicPianoData;
 using MusicPianoLogic;
 using Spectre.Console;
+using System.Text;
 
 #region Database Setup
 //using var context = new PianoLessonContext();
@@ -106,6 +107,9 @@ using var context = new PianoLessonContext(optionsBuilder.Options);
 
 DbInitializer.InitializeDatabase(context);
 
+User? loggedUser;
+Repository repository = new Repository(context);
+
 while (true)
 {
     AnsiConsole.Markup("[underline yellow]Hello to the music piano![/]\n");
@@ -113,21 +117,94 @@ while (true)
     var username = Console.ReadLine();
     AnsiConsole.Markup("[yellow]Please enter your password:[/]\n");
     var password = Console.ReadLine();
-    Repository repository = new Repository(context);
-    var user = await repository.LoginUser(username, password);
+    
+    loggedUser = await repository.LoginUser(username, password);
 
-    if (user != null)
+    if (loggedUser != null)
     {
-        AnsiConsole.Markup($"[green]Welcome, {user.Name}! You have successfully logged in.[/]\n");
+        AnsiConsole.Clear();
+        AnsiConsole.Markup($"[green]Welcome, {loggedUser.Name}! You have successfully logged in.[/]\n");
         break;
     }
     else
     {
+        AnsiConsole.Clear();
         AnsiConsole.Markup("[red]Invalid username or password. Please try again.[/]\n");
     }
 }
 
-Note myNote = new Note();
+AnsiConsole.Markup("[yellow]Music Piano:[/]\n");
+var lessons = await repository.GetAllLessons();
+int userId = loggedUser.Id;
+var lessonsStatus = await repository.GetLessonsForUser(userId);
+Dictionary<int, UserLesson> lessonsStatusDict = new Dictionary<int, UserLesson>();
+foreach (var lessonStatus in lessonsStatus)
+{
+    lessonsStatusDict[lessonStatus.IdLesson] = lessonStatus;
+}
+List<MusicPianoLogic.Lesson> lessonList = new List<MusicPianoLogic.Lesson>();
+foreach (var lessonStatus in lessonsStatus)
+{
+    MusicPianoData.Lesson lesson = lessonStatus.IdLessonNavigation;
+    MusicPianoLogic.Lesson newLesson;
+    string color;
+    if (lesson.IsTheoretical)
+    {
+        newLesson = new TheoryLesson(lesson.Name, lesson.Description, lesson.Questions.Split('\n'), lesson.Answers.Split('\n'), [], false, false);
+    }
+    else
+    {
+        newLesson = new PracticeLessson(lesson.Name, lesson.Description, lesson.Questions.Split('\n'), lesson.Answers.Split('\n'), [], false, false);
+    }
+    lessonList.Add(newLesson);
+    StringBuilder lessonText = new StringBuilder();
+    lessonText.Append("[[");
+    if (lessonsStatusDict[lesson.Id].IsCompleted)
+    {
+        color = "green";
+        lessonText.Append("✔");
+    }
+    else if (lessonsStatusDict[lesson.Id].IsUnlocked)
+    {
+        color = "yellow";
+        lessonText.Append('■');
+    }
+    else
+    {
+        color = "grey";
+        lessonText.Append(" ");
+    }
+    lessonText.Append("]]");
+    lessonText.Append(lesson.Name);
+    lessonText.Append(" - ");
+    lessonText.Append(lesson.Description);
+    AnsiConsole.Markup($"[{color}]{lessonText}[/]\n");
+}
+
+while (true)
+{
+    AnsiConsole.Markup("[yellow]Input the lesson number you want to start[/]\n");
+    var lesson = Console.ReadLine();
+    if (int.TryParse(lesson, out int result))
+    {
+        // TODO: Start lesson
+        if (result >= 1 && result <= lessonList.Count)
+        {
+            lessonList[result - 1].LaunchLesson();
+        }
+        else
+        {
+            AnsiConsole.Markup("[red]That is not a valid lesson.[/]\n");
+        }
+    }
+    else
+    {
+        AnsiConsole.Markup("[red]That is not a valid lesson.[/]\n");
+    }
+}
+
+
+/*Note myNote = new Note();
 while (true)
 {
     AnsiConsole.Markup("[yellow]Please enter a note or 0 to exit.[/]\n");
@@ -145,4 +222,4 @@ while (true)
     {
         AnsiConsole.Markup("[red]Note did not play[/]\n");
     }
-}
+}*/

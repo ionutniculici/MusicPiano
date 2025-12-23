@@ -20,6 +20,46 @@ public static class DbInitializer
                 new Lesson { Name = "Lesson 10", Description = "Final Practice", Questions = "C.wav\nE.wav\nGb.wav\nB.wav\nEb.wav", Answers = "c\ne\nf#\nb\neb", IsTheoretical = false },
             };
 
+        var expectedPrerequisites = new LessonPrerequisite[]
+        {
+            new LessonPrerequisite{
+                IdLesson = 2,
+                PrerequisiteLessonId = 1
+            },
+            new LessonPrerequisite{
+                IdLesson = 3,
+                PrerequisiteLessonId = 2
+            },
+            new LessonPrerequisite{
+                IdLesson = 4,
+                PrerequisiteLessonId = 3
+            },
+            new LessonPrerequisite{
+                IdLesson = 5,
+                PrerequisiteLessonId = 4
+            },
+            new LessonPrerequisite{
+                IdLesson = 6,
+                PrerequisiteLessonId = 5
+            },
+            new LessonPrerequisite{
+                IdLesson = 7,
+                PrerequisiteLessonId = 6
+            },
+            new LessonPrerequisite{
+                IdLesson = 8,
+                PrerequisiteLessonId = 7
+            },
+            new LessonPrerequisite{
+                IdLesson = 9,
+                PrerequisiteLessonId = 8
+            },
+            new LessonPrerequisite{
+                IdLesson = 10,
+                PrerequisiteLessonId = 9
+            },
+        };
+
         foreach (var lesson in expectedLessons)
         {
             var existingLesson = context.Lessons.SingleOrDefault(l => l.Name == lesson.Name);
@@ -51,26 +91,130 @@ public static class DbInitializer
             }
         }
 
+        foreach (var prerequisite in expectedPrerequisites)
+        {
+            var existingPrerequisite = context.LessonPrerequisites.SingleOrDefault(lp =>
+                lp.IdLesson == prerequisite.IdLesson &&
+                lp.PrerequisiteLessonId == prerequisite.PrerequisiteLessonId);
+            if (existingPrerequisite == null)
+            {
+                context.LessonPrerequisites.Add(prerequisite);
+            }
+            var allExistingPrerequisites = context.LessonPrerequisites.ToList();
+            var unwantedLessonPrerequisites = allExistingPrerequisites
+                .Where(lp => !expectedPrerequisites.Any(expected =>
+                    expected.IdLesson == lp.IdLesson &&
+                    expected.PrerequisiteLessonId == lp.PrerequisiteLessonId))
+                .ToList();
+            if (unwantedLessonPrerequisites.Any())
+            {
+                context.LessonPrerequisites.RemoveRange(unwantedLessonPrerequisites);
+            }
+        }
+
         if (!context.Users.Any())
         {
-            var testUser = new User
+            var newUser = new User
             {
                 Name = "Test",
                 Password = "test",
             };
 
-            context.Users.Add(testUser);
+            context.Users.Add(newUser);
+            
         }
         else if (context.Users.FirstOrDefault(u => u.Name == "Test") == null)
         {
-            var testUser = new User
+            var newUser = new User
             {
                 Name = "Test",
                 Password = "test",
             };
-            context.Users.Add(testUser);
+            context.Users.Add(newUser);
         }
 
         context.SaveChanges();
+
+        var testUser = context.Users.FirstOrDefault(u => u.Name == "Test");
+        if (testUser != null)
+        {
+            int userId = testUser.Id;
+
+            var expectedCompletions = new UserLesson[]
+            {
+                new UserLesson {
+                    IdUser = userId,
+                    IdLesson = 1,
+                    IsCompleted = false,
+                    IsUnlocked = true,
+                },
+                new UserLesson {
+                    IdUser = userId,
+                    IdLesson = 2,
+                    IsCompleted = false,
+                    IsUnlocked = false,
+                },
+                new UserLesson {
+                    IdUser = userId,
+                    IdLesson = 3,
+                    IsCompleted = false,
+                    IsUnlocked = false,
+                },
+                new UserLesson {
+                    IdUser = userId,
+                    IdLesson = 4,
+                    IsCompleted = false,
+                    IsUnlocked = false,
+                },
+                new UserLesson {
+                    IdUser = userId,
+                    IdLesson = 5,
+                    IsCompleted = false,
+                    IsUnlocked = false,
+                },
+                new UserLesson {
+                    IdUser = userId,
+                    IdLesson = 6,
+                    IsCompleted = false,
+                    IsUnlocked = false,
+                },
+                new UserLesson {
+                    IdUser = userId,
+                    IdLesson = 7,
+                    IsCompleted = false,
+                    IsUnlocked = false,
+                },
+                new UserLesson {
+                    IdUser = userId,
+                    IdLesson = 8,
+                    IsCompleted = false,
+                    IsUnlocked = false,
+                },
+                new UserLesson {
+                    IdUser = userId,
+                    IdLesson = 9,
+                    IsCompleted = false,
+                    IsUnlocked = false,
+                },
+                new UserLesson {
+                    IdUser = userId,
+                    IdLesson = 10,
+                    IsCompleted = false,
+                    IsUnlocked = false,
+                },
+            };
+
+            foreach (var completion in expectedCompletions)
+            {
+                var existingCompletion = context.UserLessons.SingleOrDefault(c => c.IdUser == completion.IdUser
+                    && c.IdLesson == completion.IdLesson);
+                if (existingCompletion == null)
+                {
+                    context.UserLessons.Add(completion);
+                }
+            }
+
+            context.SaveChanges();
+        }
     }
 }

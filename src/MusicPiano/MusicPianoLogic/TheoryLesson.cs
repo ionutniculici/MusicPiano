@@ -2,20 +2,22 @@
 
 public class TheoryLesson : Lesson
 {
-    string Content { get; set; }
+    string[] Questions { get; set; }
+    string[] Answers { get; set; }
 
-    public TheoryLesson(string title, Lesson[] prerequisites, bool completed, string content) : base(title, prerequisites, completed, false)
+    public TheoryLesson(string title, string? description, string[] questions, string[] answers, Lesson[] prerequisites, bool isCompleted, bool isUnlocked) : base(title, description, prerequisites, isCompleted, false)
     {
-        Content = content;
+        Questions = questions;
+        Answers = answers;
     }
 
-    public TheoryLesson(string title) : this(title, [], false, string.Empty)
+    public TheoryLesson(string title) : this(title, null, [], [], [], false, false)
     {
 
     }
 
     public override void LaunchLesson()
     {
-        Console.WriteLine(Content);
+        
     }
 }

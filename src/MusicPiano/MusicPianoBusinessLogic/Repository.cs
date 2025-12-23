@@ -24,5 +24,15 @@ namespace MusicPianoBusinessLogic
             await context.SaveChangesAsync();
             return newUser;
         }
+
+        public async Task<List<Lesson>> GetAllLessons()
+        {
+            return await context.Lessons.OrderBy(l => l.Name).ToListAsync();
+        }
+
+        public async Task<List<UserLesson>> GetLessonsForUser(int userId)
+        {
+            return await context.UserLessons.OrderBy(ul => ul.IdLesson).ToListAsync();
+        }
     }
 }

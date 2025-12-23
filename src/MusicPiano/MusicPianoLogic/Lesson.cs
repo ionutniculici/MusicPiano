@@ -3,17 +3,19 @@
 public abstract class Lesson
 {
     protected string Title { get; set; }
+    protected string? Description { get; set; }
     protected Lesson[] Prerequisites { get; set; }
     protected bool IsUnlocked { get; set; }
 
-    public Lesson(string title, Lesson[] prerequisites, bool isCompleted, bool isUnlocked)
+    public Lesson(string title, string? description, Lesson[] prerequisites, bool isCompleted, bool isUnlocked)
     {
         Title = title;
+        Description = description;
         Prerequisites = prerequisites;
         IsUnlocked = isUnlocked;
     }
 
-    public Lesson(string title) : this(title, [], false, false)
+    public Lesson(string title) : this(title, null, [], false, false)
     {
 
     }
