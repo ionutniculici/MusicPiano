@@ -2,10 +2,10 @@
 
 public abstract class Lesson
 {
-    protected string Title { get; set; }
-    protected string? Description { get; set; }
-    protected Lesson[] Prerequisites { get; set; }
-    protected bool IsUnlocked { get; set; }
+    public string Title { get; private set; }
+    public string? Description { get; private set; }
+    public Lesson[] Prerequisites { get; private set; }
+    public bool IsUnlocked { get; private set; }
 
     public Lesson(string title, string? description, Lesson[] prerequisites, bool isCompleted, bool isUnlocked)
     {

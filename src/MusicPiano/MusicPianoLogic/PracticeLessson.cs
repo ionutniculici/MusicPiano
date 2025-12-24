@@ -4,8 +4,8 @@ namespace MusicPianoLogic;
 
 public class PracticeLessson : Lesson
 {
-    string[] AudioFiles { get; set; }
-    string[] Answers { get; set; }
+    public string[] AudioFiles { get; private set; }
+    public string[] Answers { get; private set; }
 
     public PracticeLessson(string title, string? description, string[] audioFiles, string[] answers, Lesson[] prerequisites, bool isCompleted, bool isUnlocked) : base(title, description, prerequisites, isCompleted, false)
     {
