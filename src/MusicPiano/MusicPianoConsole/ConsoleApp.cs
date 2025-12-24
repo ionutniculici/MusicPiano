@@ -149,7 +149,7 @@ internal class ConsoleApp
             AnsiConsole.Markup($"[yellow]{lesson.Questions[i]}[/]\n");
             while (true)
             {
-                AnsiConsole.Markup("[yellow]Your answer:[/]\n");
+                AnsiConsole.Markup("[yellow]Your answer:[/] ");
                 var answer = Console.ReadLine();
                 if (answer.Equals("back"))
                 {
@@ -175,7 +175,40 @@ internal class ConsoleApp
 
     public static bool StartPracticeLesson(PracticeLessson lesson)
     {
-        return false;
+        AnsiConsole.Markup($"[yellow]{lesson.Title} - {lesson.Description}[/]\n");
+        AnsiConsole.Markup("[yellow]Input the notes you hear[/]\n");
+        Note myNote = new Note();
+        for (int i = 0; i < lesson.AudioFiles.Length; i++)
+        {
+            myNote.ChooseNote(lesson.AudioFiles[i]);
+            while (true)
+            {
+                AnsiConsole.Markup("[yellow]Your answer:[/] ");
+                var answer = Console.ReadLine();
+                if (answer.Equals("back"))
+                {
+                    AnsiConsole.Clear();
+                    return false;
+                }
+                if (answer.Equals("repeat"))
+                {
+                    myNote.ChooseNote(lesson.AudioFiles[i]);
+                }
+                else if (answer.Contains(lesson.Answers[i]))
+                {
+                    AnsiConsole.Markup("[green]Correct![/]\n");
+                    break;
+                }
+                else
+                {
+                    AnsiConsole.Markup("[red]Wrong answer, try again.[/]\n");
+                }
+            }
+        }
+        AnsiConsole.Markup("[yellow]You have completed this lesson! Press any key to continue...[/]\n");
+        Console.ReadKey();
+        AnsiConsole.Clear();
+        return true;
     }
 
     public static void MarkLessonAsComplete(List<UserLesson> lessonsStatus, PianoLessonContext context, int userId, int lessonId)
