@@ -63,6 +63,21 @@ internal class ConsoleApp
     public static void PrintLessons(List<UserLesson> lessonsStatus, Dictionary<int, UserLesson> lessonsStatusDict)
     {
         AnsiConsole.Markup("[yellow]Music Piano:[/]\n");
+        int completedLessons = lessonsStatus
+                            .Where(ul => ul.IsCompleted)
+                            .Count();
+        if (completedLessons > 8)
+        {
+            AnsiConsole.Markup("[yellow]Advanced ***[/]\n");
+        }
+        else if (completedLessons > 5)
+        {
+            AnsiConsole.Markup("[yellow]Intermediate **[/]\n");
+        }
+        else if (completedLessons > 2)
+        {
+            AnsiConsole.Markup("[yellow]Beginner *[/]\n");
+        }
         foreach (var lessonStatus in lessonsStatus)
         {
             MusicPianoData.Lesson lesson = lessonStatus.IdLessonNavigation;
