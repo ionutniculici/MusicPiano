@@ -2,12 +2,7 @@
 using MusicPianoData;
 using MusicPianoLogic;
 using Spectre.Console;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace MusicPianoConsole;
 
@@ -113,6 +108,13 @@ internal class ConsoleApp
         {
             AnsiConsole.Markup("[yellow]Input the lesson number you want to start[/]\n");
             var lesson = Console.ReadLine();
+            if (lesson.Equals("resetALL"))
+            {
+                ResetALLProgressForUser(lessonsStatus, context, userId);
+                AnsiConsole.Clear();
+                PrintLessons(lessonsStatus, lessonsStatusDict);
+                continue;
+            }
             if (int.TryParse(lesson, out int result))
             {
                 if (result >= 1 && result <= lessonList.Count)
@@ -260,5 +262,26 @@ internal class ConsoleApp
         }
 
         context.SaveChanges();
-    }                                            
+    }
+
+    public static void ResetALLProgressForUser(List<UserLesson> lessonsStatus, PianoLessonContext context, int userId)
+    {
+        var currentLesson = context.UserLessons
+            .Where(ul => ul.IdUser == userId)
+            .ToList();
+
+        foreach (var userlesson in lessonsStatus)
+        {
+            userlesson.IsCompleted = false;
+            if (userlesson.IdLesson == 1)
+            {
+                userlesson.IsUnlocked = true;
+            }
+            else
+            {
+                userlesson.IsUnlocked = false;
+            }
+        }
+        context.SaveChanges();
+    }
 }
