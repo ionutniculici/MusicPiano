@@ -1,4 +1,10 @@
-﻿namespace MusicPianoForms
+﻿using MusicPianoData;
+using MusicPianoLogic;
+using MusicPianoResources;
+using System.Text;
+using System.Windows.Forms;
+
+namespace MusicPianoForms
 {
     partial class PianoApp
     {
@@ -40,7 +46,7 @@
             usernameLabel.AutoSize = true;
             usernameLabel.Location = new Point(86, 38);
             usernameLabel.Name = "usernameLabel";
-            usernameLabel.Size = new Size(75, 20);
+            usernameLabel.Size = new Size(38, 20);
             usernameLabel.TabIndex = 0;
             usernameLabel.Text = "User";
             // 
@@ -56,7 +62,7 @@
             passwordLabel.AutoSize = true;
             passwordLabel.Location = new Point(86, 120);
             passwordLabel.Name = "passwordLabel";
-            passwordLabel.Size = new Size(75, 20);
+            passwordLabel.Size = new Size(70, 20);
             passwordLabel.TabIndex = 0;
             passwordLabel.Text = "Password";
             // 
@@ -77,7 +83,7 @@
             loginButton.UseVisualStyleBackColor = true;
             loginButton.Click += loginButton_Click;
             // 
-            // PianoApp Form
+            // PianoApp
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -93,45 +99,83 @@
             PerformLayout();
         }
 
-        private void ChangeLayout()
+        private void ChangeLayout(List<UserLesson> lessonsStatus, Dictionary<int, UserLesson> lessonsStatusDict)
         {
-            noteLabel = new Label();
-            noteText = new TextBox();
-            playNoteButton = new Button();
+            certificate = new Label();
+            panel = new FlowLayoutPanel();
             SuspendLayout();
             // 
-            // noteLabel
+            // certificate
             // 
-            noteLabel.AutoSize = true;
-            noteLabel.Location = new Point(86, 38);
-            noteLabel.Name = "noteLabel";
-            noteLabel.Size = new Size(135, 20);
-            noteLabel.TabIndex = 0;
-            noteLabel.Text = "Please enter a note";
+            certificate.AutoSize = true;
+            certificate.Location = new Point(7, 10);
+            certificate.Name = "certificate";
+            certificate.Size = new Size(154, 20);
+            certificate.TabIndex = 0;
+            int completedLessons = lessonsStatus
+                            .Where(ul => ul.IsCompleted)
+                            .Count();
+            if (completedLessons > 8)
+            {
+                certificate.Text = "Advanced ***";
+            }
+            else if (completedLessons > 5)
+            {
+                certificate.Text = "Intermediate **";
+            }
+            else if (completedLessons > 2)
+            {
+                certificate.Text = "Beginner *";
+            }
+            else
+            {
+                certificate.Enabled = false;
+            }
+            //
+            // panel
+            //
+            int rowHeight = 0;
+            foreach (var lessonStatus in lessonsStatus)
+            {
+                LessonRow lessonRow = new LessonRow();
+                MusicPianoData.Lesson lesson = lessonStatus.IdLessonNavigation;
+                StringBuilder lessonText = new StringBuilder();
+                Image image;
+                if (lessonsStatusDict[lesson.Id].IsCompleted)
+                {
+                    image = Image.FromFile(ImageFiles.GetImagePath("completed.png"));
+                }
+                else if (lessonsStatusDict[lesson.Id].IsUnlocked)
+                {
+                    image = Image.FromFile(ImageFiles.GetImagePath("unlocked.png"));
+                }
+                else
+                {
+                    image = Image.FromFile(ImageFiles.GetImagePath("locked.png"));
+                }
+                lessonText.Append(lesson.Name);
+                lessonText.Append(" - ");
+                lessonText.Append(lesson.Description);
+                lessonRow.Location = new Point(0, rowHeight);
+                lessonRow.Margin = new Padding(0);
+                lessonRow.Size = new Size(500, 40);
+                string tempString = lessonText.ToString().Replace("&", "&&");
+                lessonRow.Setup(tempString, image, !lessonsStatusDict[lesson.Id].IsUnlocked, null);
+                lessonRow.TabIndex = 0;
+                rowHeight += 40;
+                panel.Controls.Add(lessonRow);
+            }
+            panel.Location = new Point(0, 30);
+            panel.Margin = new Padding(0);
+            panel.Name = "panel";
+            panel.Size = new Size(500, 400);
+            panel.TabIndex = 1;
             // 
-            // noteText
-            // 
-            noteText.Location = new Point(86, 76);
-            noteText.Name = "noteText";
-            noteText.Size = new Size(125, 27);
-            noteText.TabIndex = 1;
-            // 
-            // playNoteButton
-            // 
-            playNoteButton.Location = new Point(87, 126);
-            playNoteButton.Name = "playNoteButton";
-            playNoteButton.Size = new Size(94, 29);
-            playNoteButton.TabIndex = 2;
-            playNoteButton.Text = "Play Note";
-            playNoteButton.UseVisualStyleBackColor = true;
-            playNoteButton.Click += playNoteButton_Click;
-            // 
-            // PianoApp Form
+            // PianoApp
             // 
             Controls.Clear();
-            Controls.Add(playNoteButton);
-            Controls.Add(noteText);
-            Controls.Add(noteLabel);
+            Controls.Add(certificate);
+            Controls.Add(panel);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -143,8 +187,7 @@
         private TextBox passwordText;
         private Button loginButton;
 
-        private Label noteLabel;
-        private TextBox noteText;
-        private Button playNoteButton;
+        private Label certificate;
+        private FlowLayoutPanel panel;
     }
 }

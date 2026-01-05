@@ -27,7 +27,8 @@ namespace MusicPianoForms
             if (success)
             {
                 DialogResult result = MessageBox.Show($"Welcome, {user!.Name}! You have successfully logged in.", "Login", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                ChangeLayout();
+                await AppState.Initialize(optionsBuilder.Options, user);
+                ChangeLayout(AppState.lessonsStatus, AppState.lessonsStatusDict);
             }
             else
             {
@@ -35,13 +36,13 @@ namespace MusicPianoForms
             }
         }
 
-        private void playNoteButton_Click(object sender, EventArgs e)
+        /*private void playNoteButton_Click(object sender, EventArgs e)
         {
             var note = noteText.Text;
             Note myNote = new Note();
             var result = myNote.ChooseNote(note);
             string message = result ? "Note played" : "Note did not play";
             MessageBox.Show(message, "PianoApp");
-        }
+        }*/
     }
 }
