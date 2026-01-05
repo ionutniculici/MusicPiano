@@ -8,10 +8,14 @@ namespace MusicPianoForms;
 
 public static class AppState
 {
+    public static int userId;
     public static Repository repository;
     public static Dictionary<int, UserLesson> lessonsStatusDict;
     public static List<MusicPianoLogic.Lesson> lessonList;
     public static List<UserLesson>? lessonsStatus;
+    public static int currentQuestionIndex;
+    public static int totalQuestions;
+    public static int currentLessonId;
 
     public static async Task Initialize(DbContextOptions<PianoLessonContext> options, User? user)
     {
@@ -19,6 +23,7 @@ public static class AppState
         repository = new Repository(context);
         lessonsStatusDict = new Dictionary<int, UserLesson>();
         lessonList = new List<MusicPianoLogic.Lesson>();
+        userId = user.Id;
         lessonsStatus = await InitLessons(repository, lessonsStatusDict, lessonList, user.Id);
     }
 

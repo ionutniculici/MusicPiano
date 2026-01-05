@@ -7,11 +7,11 @@ public partial class LessonRow : UserControl
         InitializeComponent();
     }
 
-    public void Setup(string title, Image image, bool isLocked, EventHandler onClick)
+    public void Setup(string title, Image image, bool isLocked, Action<MusicPianoLogic.Lesson, MusicPianoData.Lesson> onClick, MusicPianoLogic.Lesson lesson, MusicPianoData.Lesson lessonDb)
     {
         label.Text = title;
         picture.Image = image;
         button.Enabled = !isLocked;
-        button.Click += onClick;
+        button.Click += (sender, e) => onClick(lesson, lessonDb);
     }
 }

@@ -102,7 +102,7 @@ internal class ConsoleApp
         }
     }
 
-    public static void ChooseLesson(List<UserLesson> lessonsStatus, List<MusicPianoLogic.Lesson> lessonList, Dictionary<int, UserLesson> lessonsStatusDict, PianoLessonContext context, int userId)
+    public static void ChooseLesson(List<UserLesson> lessonsStatus, List<MusicPianoLogic.Lesson> lessonList, Dictionary<int, UserLesson> lessonsStatusDict, Repository repository, int userId)
     {
         while (true)
         {
@@ -110,7 +110,7 @@ internal class ConsoleApp
             var lesson = Console.ReadLine();
             if (lesson.Equals("resetALL"))
             {
-                ResetALLProgressForUser(lessonsStatus, context, userId);
+                repository.ResetALLProgressForUser(lessonsStatus, userId);
                 AnsiConsole.Clear();
                 PrintLessons(lessonsStatus, lessonsStatusDict);
                 continue;
@@ -125,7 +125,7 @@ internal class ConsoleApp
                         bool complete = StartLesson(lessonList[result - 1], lessonsStatusDict[result].IdLessonNavigation.IsTheoretical);
                         if (complete)
                         {
-                            MarkLessonAsComplete(lessonsStatus, context, userId, result);
+                            repository.MarkLessonAsComplete(lessonsStatus, userId, result);
                         }
                         PrintLessons(lessonsStatus, lessonsStatusDict);
                     }
@@ -226,62 +226,5 @@ internal class ConsoleApp
         Console.ReadKey();
         AnsiConsole.Clear();
         return true;
-    }
-
-    public static void MarkLessonAsComplete(List<UserLesson> lessonsStatus, PianoLessonContext context, int userId, int lessonId)
-    {
-        var nextLessonsIds = context.LessonPrerequisites
-            .Where(lp => lp.PrerequisiteLessonId == lessonId)
-            .Select(lp => lp.IdLesson)
-            .ToList();
-
-        if (nextLessonsIds.Any())
-        {
-            var lessonsToUnlock = context.UserLessons
-                .Where(ul => ul.IdUser == userId && nextLessonsIds.Contains(ul.IdLesson))
-                .ToList();
-
-            foreach (var ul in lessonsToUnlock)
-            {
-                if (!ul.IsUnlocked)
-                {
-                    ul.IsUnlocked = true;
-                }
-            }
-        }
-
-        var currentLesson = context.UserLessons
-            .FirstOrDefault(ul => ul.IdUser == userId && ul.IdLesson == lessonId);
-
-        if (currentLesson != null)
-        {
-            if (!currentLesson.IsCompleted)
-            {
-                currentLesson.IsCompleted = true;
-            }
-        }
-
-        context.SaveChanges();
-    }
-
-    public static void ResetALLProgressForUser(List<UserLesson> lessonsStatus, PianoLessonContext context, int userId)
-    {
-        var currentLesson = context.UserLessons
-            .Where(ul => ul.IdUser == userId)
-            .ToList();
-
-        foreach (var userlesson in lessonsStatus)
-        {
-            userlesson.IsCompleted = false;
-            if (userlesson.IdLesson == 1)
-            {
-                userlesson.IsUnlocked = true;
-            }
-            else
-            {
-                userlesson.IsUnlocked = false;
-            }
-        }
-        context.SaveChanges();
     }
 }

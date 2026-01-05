@@ -28,7 +28,7 @@ namespace MusicPianoForms
             {
                 DialogResult result = MessageBox.Show($"Welcome, {user!.Name}! You have successfully logged in.", "Login", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 await AppState.Initialize(optionsBuilder.Options, user);
-                ChangeLayout(AppState.lessonsStatus, AppState.lessonsStatusDict);
+                DisplayLessons(AppState.lessonsStatus, AppState.lessonsStatusDict);
             }
             else
             {

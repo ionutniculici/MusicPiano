@@ -30,4 +30,4 @@ List<MusicPianoLogic.Lesson> lessonList = new List<MusicPianoLogic.Lesson>();
 List<UserLesson>? lessonsStatus = null;
 lessonsStatus = await ConsoleApp.InitLessons(repository, lessonsStatusDict, lessonList, loggedUser.Id);
 ConsoleApp.PrintLessons(lessonsStatus, lessonsStatusDict);
-ConsoleApp.ChooseLesson(lessonsStatus, lessonList, lessonsStatusDict, context, loggedUser.Id);
+ConsoleApp.ChooseLesson(lessonsStatus, lessonList, lessonsStatusDict, repository, loggedUser.Id);
