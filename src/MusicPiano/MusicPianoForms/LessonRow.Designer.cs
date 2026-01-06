@@ -36,10 +36,10 @@
             // 
             // picture
             // 
-            picture.Location = new Point(3, 5);
+            picture.Location = new Point(5, 10);
             picture.Margin = new Padding(0);
             picture.Name = "picture";
-            picture.Size = new Size(30, 30);
+            picture.Size = new Size(20, 20);
             picture.SizeMode = PictureBoxSizeMode.StretchImage;
             picture.TabIndex = 0;
             picture.TabStop = false;
@@ -47,7 +47,7 @@
             // label
             // 
             label.AutoSize = true;
-            label.Location = new Point(39, 10);
+            label.Location = new Point(27, 10);
             label.Name = "label";
             label.Size = new Size(94, 20);
             label.TabIndex = 1;
