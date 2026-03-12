@@ -103,6 +103,9 @@ var optionsBuilder = new DbContextOptionsBuilder<PianoLessonContext>();
 optionsBuilder.UseSqlServer(connectionString);
 
 using var context = new PianoLessonContext(optionsBuilder.Options);
+
+DbInitializer.InitializeDatabase(context);
+
 while (true)
 {
     AnsiConsole.Markup("[underline yellow]Hello to the music piano![/]\n");

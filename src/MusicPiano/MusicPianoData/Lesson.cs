@@ -11,6 +11,12 @@ public partial class Lesson
 
     public string? Description { get; set; }
 
+    public string Questions { get; set; } = null!;
+
+    public string Answers { get; set; } = null!;
+
+    public bool IsTheoretical { get; set; }
+
     public virtual ICollection<LessonPrerequisite> LessonPrerequisites { get; set; } = new List<LessonPrerequisite>();
 
     public virtual ICollection<UserLesson> UserLessons { get; set; } = new List<UserLesson>();

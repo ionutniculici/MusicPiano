@@ -25,8 +25,10 @@ public partial class PianoLessonContext : DbContext
         {
             entity.ToTable("Lesson");
 
+            entity.Property(e => e.Answers).HasMaxLength(500);
             entity.Property(e => e.Description).HasMaxLength(500);
             entity.Property(e => e.Name).HasMaxLength(50);
+            entity.Property(e => e.Questions).HasMaxLength(500);
         });
 
         modelBuilder.Entity<LessonPrerequisite>(entity =>
