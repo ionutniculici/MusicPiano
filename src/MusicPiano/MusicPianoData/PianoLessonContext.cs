@@ -35,8 +35,6 @@ public partial class PianoLessonContext : DbContext
         {
             entity.HasKey(e => new { e.IdLesson, e.PrerequisiteLessonId }).HasName("PK_LessonPrerequisites_1");
 
-            entity.Property(e => e.IdLesson).ValueGeneratedOnAdd();
-
             entity.HasOne(d => d.IdLessonNavigation).WithMany(p => p.LessonPrerequisites)
                 .HasForeignKey(d => d.IdLesson)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -56,8 +54,6 @@ public partial class PianoLessonContext : DbContext
             entity.HasKey(e => new { e.IdUser, e.IdLesson }).HasName("PK_UserLesson_1");
 
             entity.ToTable("UserLesson");
-
-            entity.Property(e => e.IdUser).ValueGeneratedOnAdd();
 
             entity.HasOne(d => d.IdLessonNavigation).WithMany(p => p.UserLessons)
                 .HasForeignKey(d => d.IdLesson)

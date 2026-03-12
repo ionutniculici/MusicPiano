@@ -1,15 +1,14 @@
-﻿namespace MusicPianoResources
+﻿namespace MusicPianoResources;
+
+public static class AudioFiles
 {
-    public static class AudioFiles
+    public static Stream? GetSoundStream(string fileName)
     {
-        public static Stream? GetSoundStream(string fileName)
+        string soundFilePath = Path.Combine(AppContext.BaseDirectory, "Sounds", fileName);
+        if (!File.Exists(soundFilePath))
         {
-            string soundFilePath = Path.Combine(AppContext.BaseDirectory, "Sounds", fileName);
-            if (!File.Exists(soundFilePath))
-            {
-                return null;
-            }
-            return new FileStream(soundFilePath, FileMode.Open, FileAccess.Read);
+            return null;
         }
+        return new FileStream(soundFilePath, FileMode.Open, FileAccess.Read);
     }
 }
