@@ -58,20 +58,26 @@ internal class ConsoleApp
     public static void PrintLessons(List<UserLesson> lessonsStatus, Dictionary<int, UserLesson> lessonsStatusDict)
     {
         AnsiConsole.Markup("[yellow]Music Piano:[/]\n");
+        UserRank userRank = new UserRank();
+        var rank = userRank.DetermineRankForUser(lessonsStatus.ToArray());
         int completedLessons = lessonsStatus
                             .Where(ul => ul.IsCompleted)
                             .Count();
-        if (completedLessons > 8)
+        switch (rank)
         {
-            AnsiConsole.Markup("[yellow]Advanced ***[/]\n");
-        }
-        else if (completedLessons > 5)
-        {
-            AnsiConsole.Markup("[yellow]Intermediate **[/]\n");
-        }
-        else if (completedLessons > 2)
-        {
-            AnsiConsole.Markup("[yellow]Beginner *[/]\n");
+            case UserRankEnum.STARTER:
+                break;
+            case UserRankEnum.BEGINNER:
+                AnsiConsole.Markup("[yellow]Beginner *[/]\n");
+                break;
+            case UserRankEnum.INTERMEDIATE:
+                AnsiConsole.Markup("[yellow]Intermediate **[/]\n");
+                break;
+            case UserRankEnum.ADVANCED:
+                AnsiConsole.Markup("[yellow]Advanced ***[/]\n");
+                break;
+            default:
+                throw new Exception($"Does not handle {rank}");
         }
         foreach (var lessonStatus in lessonsStatus)
         {
