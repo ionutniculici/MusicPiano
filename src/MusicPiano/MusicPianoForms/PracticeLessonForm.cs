@@ -15,10 +15,13 @@ namespace MusicPianoForms
 {
     public partial class PracticeLessonForm : Form
     {
+        int currentQuestionIndex;
+
         public PracticeLessonForm(PracticeLessson lesson)
         {
             InitializeComponent();
             AskPracticeQuestion(lesson);
+            currentQuestionIndex = 0;
         }
 
         private void AskPracticeQuestion(PracticeLessson lesson)
@@ -109,24 +112,24 @@ namespace MusicPianoForms
 
         private void PlayNote(PracticeLessson lesson)
         {
-            var note = lesson.AudioFiles[AppState.currentQuestionIndex];
+            var note = lesson.AudioFiles[currentQuestionIndex];
             Note myNote = new Note();
             var result = myNote.ChooseNote(note);
         }
 
         private void CheckPracticeAnswer(PracticeLessson lesson, string answer)
         {
-            if (answer.Contains(lesson.Answers[AppState.currentQuestionIndex]))
+            if (answer.Contains(lesson.Answers[currentQuestionIndex]))
             {
                 DialogResult result = MessageBox.Show("Correct!", lesson.Title, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                if (AppState.currentQuestionIndex == AppState.totalQuestions - 1)
+                if (currentQuestionIndex == lesson.AudioFiles.Count() - 1)
                 {
                     AppState.repository.MarkLessonAsComplete(AppState.lessonsStatus, AppState.userId, AppState.currentLessonId);
                     Close();
                 }
                 else
                 {
-                    AppState.currentQuestionIndex++;
+                    currentQuestionIndex++;
                     AskPracticeQuestion(lesson);
                 }
             }

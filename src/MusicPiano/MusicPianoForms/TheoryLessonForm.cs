@@ -14,10 +14,13 @@ namespace MusicPianoForms
 {
     public partial class TheoryLessonForm : Form
     {
+        int currentQuestionIndex;
+
         public TheoryLessonForm(TheoryLesson lesson)
         {
             InitializeComponent();
             AskTheoryQuestion(lesson);
+            currentQuestionIndex = 0;
         }
 
         private void AskTheoryQuestion(TheoryLesson lesson)
@@ -43,7 +46,7 @@ namespace MusicPianoForms
             question.Location = new Point(36, 65);
             question.Name = "question";
             question.TabIndex = 0;
-            question.Text = lesson.Questions[AppState.currentQuestionIndex];
+            question.Text = lesson.Questions[currentQuestionIndex];
             // 
             // answerText
             // 
@@ -91,17 +94,17 @@ namespace MusicPianoForms
 
         private void CheckTheoryAnswer(TheoryLesson lesson, string answer)
         {
-            if (answer.Contains(lesson.Answers[AppState.currentQuestionIndex]))
+            if (answer.Contains(lesson.Answers[currentQuestionIndex]))
             {
                 DialogResult result = MessageBox.Show("Correct!", lesson.Title, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                if (AppState.currentQuestionIndex == AppState.totalQuestions - 1)
+                if (currentQuestionIndex == lesson.Questions.Count() - 1)
                 {
                     AppState.repository.MarkLessonAsComplete(AppState.lessonsStatus, AppState.userId, AppState.currentLessonId);
                     Close();
                 }
                 else
                 {
-                    AppState.currentQuestionIndex++;
+                    currentQuestionIndex++;
                     AskTheoryQuestion(lesson);
                 }
             }
