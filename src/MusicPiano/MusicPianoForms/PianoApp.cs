@@ -2,8 +2,9 @@ using Microsoft.EntityFrameworkCore;
 using MusicPianoBusinessLogic;
 using MusicPianoData;
 using MusicPianoLogic;
+using MusicPianoResources;
 using System.Configuration;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+using System.Text;
 
 namespace MusicPianoForms
 {
@@ -28,7 +29,10 @@ namespace MusicPianoForms
             {
                 DialogResult result = MessageBox.Show($"Welcome, {user!.Name}! You have successfully logged in.", "Login", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 await AppState.Initialize(optionsBuilder.Options, user);
-                DisplayLessons(AppState.lessonsStatus, AppState.lessonsStatusDict);
+                Dashboard dashboard = new Dashboard();
+                Hide();
+                dashboard.FormClosed += (s, args) => Close();
+                dashboard.Show();
             }
             else
             {

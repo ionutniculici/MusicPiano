@@ -30,6 +30,11 @@ namespace MusicPianoBusinessLogic
             return await context.Lessons.OrderBy(l => l.Name).ToListAsync();
         }
 
+        public async Task<User[]> GetAllUsers()
+        {
+            return await context.Users.OrderBy(u => u.Name).ToArrayAsync();
+        }
+
         public async Task<List<UserLesson>> GetLessonsForUser(int userId)
         {
             return await context.UserLessons
