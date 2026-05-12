@@ -21,6 +21,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicPianoConsole", "MusicP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicPianoBusinessLogic", "MusicPianoBusinessLogic\MusicPianoBusinessLogic.csproj", "{5EF80475-FF63-4769-92D9-5682B1B2897D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicPianoWebAPI", "MusicPianoWebAPI\MusicPianoWebAPI.csproj", "{63336C55-892E-4805-B09B-CF920A871A72}"
+	ProjectSection(ProjectDependencies) = postProject
+		{30C482A9-E02C-4D13-A7EC-DCD107D8EBCC} = {30C482A9-E02C-4D13-A7EC-DCD107D8EBCC}
+		{3A9B493C-1F8B-4D54-93BD-EBB22352F4FE} = {3A9B493C-1F8B-4D54-93BD-EBB22352F4FE}
+		{5EF80475-FF63-4769-92D9-5682B1B2897D} = {5EF80475-FF63-4769-92D9-5682B1B2897D}
+		{A3BA1F3E-FA08-47F5-A5CC-C8C50F782C1B} = {A3BA1F3E-FA08-47F5-A5CC-C8C50F782C1B}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +59,10 @@ Global
 		{5EF80475-FF63-4769-92D9-5682B1B2897D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5EF80475-FF63-4769-92D9-5682B1B2897D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5EF80475-FF63-4769-92D9-5682B1B2897D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63336C55-892E-4805-B09B-CF920A871A72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63336C55-892E-4805-B09B-CF920A871A72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63336C55-892E-4805-B09B-CF920A871A72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63336C55-892E-4805-B09B-CF920A871A72}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
