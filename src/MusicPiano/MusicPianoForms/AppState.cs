@@ -13,8 +13,6 @@ public static class AppState
     public static Dictionary<int, UserLesson> lessonsStatusDict;
     public static List<MusicPianoLogic.Lesson> lessonList;
     public static List<UserLesson>? lessonsStatus;
-    public static int currentQuestionIndex;
-    public static int totalQuestions;
     public static int currentLessonId;
 
     public static async Task Initialize(DbContextOptions<PianoLessonContext> options, User? user)

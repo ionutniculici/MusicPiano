@@ -170,8 +170,6 @@ namespace MusicPianoForms
 
         private void StartTheoryLesson(TheoryLesson lesson)
         {
-            AppState.totalQuestions = lesson.Questions.Count();
-            AppState.currentQuestionIndex = 0;
             TheoryLessonForm theoryLesson = new TheoryLessonForm(lesson);
             Hide();
             theoryLesson.FormClosed += (s, args) =>
@@ -184,8 +182,6 @@ namespace MusicPianoForms
 
         private void StartPracticeLesson(PracticeLessson lesson)
         {
-            AppState.totalQuestions = lesson.AudioFiles.Count();
-            AppState.currentQuestionIndex = 0;
             PracticeLessonForm practiceLesson = new PracticeLessonForm(lesson);
             Hide();
             practiceLesson.FormClosed += (s, args) =>
